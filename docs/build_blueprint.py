@@ -90,7 +90,7 @@ def markdown(s):
             else: out.append('<pre><code>' + html.escape('\n'.join(code)) + '</code></pre>'); code = None
             continue
         if code is not None: code.append(line); continue
-        if line.startswith('|'): 
+        if line.startswith('|'):
             if paragraph: flush()
             table.append(line); continue
         if table: flush()
