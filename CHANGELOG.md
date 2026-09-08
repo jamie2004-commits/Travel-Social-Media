@@ -37,3 +37,11 @@ Each meaningful change set receives an entry and a matching commit label. A succ
 - Preview images: `docs/previews/profile-desktop.png` and `docs/previews/profile-mobile.png`, captured from the actual HTML with the 20-country example reset.
 - Verification: 56 navigation targets and all local document links resolve; all 20 example countries are in the map dataset; JavaScript syntax passes. Headless Chrome verified 20/43 initial totals, US removal, Canada search/add and map click, reset, selection/note persistence after reload, read-only friend profile, all 56 screen renders, zero duplicate generated IDs, and no browser errors. Mobile at 390px had no horizontal overflow. Print retained all screens after hiding the atlas and expanded both full documents. Desktop/mobile screenshots visually reviewed.
 - Delivery: prepared for `origin/main`; the following receipt records the confirmed content push.
+
+## LOG-002 — Confirm redesigned map delivery
+
+- Date: 8 September 2026.
+- Confirmed content commit: [`2e5f216318651d1705a97ee8d6cc5dd96305f831`](https://github.com/jamie2004-commits/Travel-Social-Media/commit/2e5f216318651d1705a97ee8d6cc5dd96305f831).
+- Result: DESIGN-002 pushed successfully to `origin/main`; local and remote HEAD matched the hash above.
+- Files in this receipt: `CHANGELOG.md` only. Records the confirmed redesign/map push and its preview images; no additional product changes.
+- Receipt destination: `origin/main`; this receipt's own delivery is verified by remote history and the final response.
