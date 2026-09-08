@@ -1,6 +1,6 @@
 # Travel Social Media — implementation guide
 
-Planning only · 8 September 2026. Commands below describe future work; they have not been run to scaffold or deploy an application. Provider interfaces and versions can change; use the linked official documentation when executing each stage.
+Implementation roadmap · 8 September 2026. Current implementation is limited to a browser prototype of the interactive flat world map within the planning/wireframe documents. Commands below describe future full-application work; they have not been run to scaffold or deploy that application. Provider interfaces and versions can change; use the linked official documentation when executing each stage.
 
 ## 1. Architecture in plain language
 
@@ -34,7 +34,8 @@ Use shared TypeScript schemas and business rules, not a forced shared UI for eve
 | Database/auth/storage | Supabase | One shared backend per environment; separate development and production projects |
 | Web hosting | Vercel | Import GitHub repository, choose web root, set environment variables, configure domain |
 | Background work | Trigger.dev, introduced with photo processing | Server submits authorised job IDs; worker reads private source files and writes results |
-| Map rendering | MapLibre GL JS / MapLibre React Native | Separate client renderers use a compatible licensed map style and tile provider |
+| Profile world map | Flat country-boundary graphic with interactive country selection | Match stable country IDs to visited records; colour selected countries and offer equivalent searchable checkboxes |
+| Detailed trip maps | MapLibre GL JS / MapLibre React Native | Separate client renderers use a compatible licensed map style and tile provider |
 | Tiles/geocoding | MapTiler candidate | Restricted client token for map display; server credentials where required; check quotas and data storage rights |
 | Transactional email | SMTP provider selected before beta | Configure Supabase SMTP and verified sending domain; monitor delivery |
 | AI scene recognition | Provider selected after benchmark | Server-only integration; send approved images, validate candidate output, apply quota |
@@ -177,17 +178,19 @@ Original photo objects are owner/worker-only, even when a trip is public. Shared
 6. Build country/city backfill and map-to-trip navigation. Count visited destinations from confirmed visit records, not future itineraries.
 7. Verify a new account can get personal value with no followers and no AI.
 
-### 8.1 Profile globe and coloured-country showcase
+### 8.1 Flat profile map and coloured-country showcase
 
-Treat the globe as a core deliverable in P1. Begin with a short rendering spike to confirm the selected MapLibre GL JS version supports the intended globe projection, country fill layers, pointer picking, and transitions at the required performance. Check native renderer parity separately; do not assume the native map has the same globe API. If native globe support is insufficient, prototype a shared WebGL globe inside a tightly scoped native WebView, or a native globe renderer, then decide from physical-device frame rate, gestures, accessibility, and maintenance cost. Keep flat-map/list fallback available on every client. Public release should include the requested interactive globe, not silently substitute only a flat map.
+Treat the flat world map as a core deliverable in P1. The current browser prototype should demonstrate an attractive profile showcase with country fills and interactive ticking; it does not require authentication, Supabase, paid map services, or deployment of the full app. Use a flat country-boundary graphic with stable identifiers and responsive sizing. A searchable checkbox list must offer the same selection actions as clicking countries on the map. Native implementation should reproduce this experience with an appropriate vector renderer; use MapLibre separately where detailed trip maps need pan, zoom, tiles, and place layers. The latest flat-map requirement replaces the earlier globe direction.
 
-Acquire a documented licensed country-boundary dataset with stable country/territory identifiers; record attribution, version, and geopolitical display policy. Render the base geometry once and apply per-user visited fills by ID. Do not redraw the entire geometry or fetch full trip histories on every drag. Restrict globe payload to visible country IDs/counts; load permitted trip summaries when a country is selected. Never load private trips into the client and merely hide their pins.
+Acquire a documented licensed country-boundary dataset with stable country/territory identifiers; record attribution, version, and geopolitical display policy. Render the base geometry once and apply per-user visited fills by ID. Restrict map payload to visible country IDs/counts; load permitted trip summaries when a country is selected. Never load private trips into the client and merely hide their pins.
+
+Prototype acceptance: initialise exactly 20 illustrative visited countries—United States; United Kingdom, France, Spain, Portugal, Italy, Germany, Netherlands, Switzerland; Singapore, Malaysia, Thailand, Indonesia, Vietnam, Philippines, Cambodia, Laos; Japan, South Korea, China. Clicking or ticking a country toggles its visited state and updates the colour, checkbox, and distinct-country total together. Unticking restores the unvisited styling. Provide clear visited/unvisited labels and a way to return to the sample selection. Embed actual country boundaries so the map works offline; persist the owner's sample choices in browser-local storage and keep other sample profiles read-only. Derive the clearly labelled sample city total from example city records associated with selected countries; actual product city totals must use separately confirmed city visit records. The prototype's state is a demonstration, while real account persistence and access policies belong to P1.
 
 Extend visits with `visibility`, `note`, `visit_period`, and `source`; use an explicit showcase visibility choice when a private trip produces a country visit. Extend profile settings with showcase colour/theme and optional public-stat controls. Store canonical city IDs to avoid counting alternate spellings twice. Country annotation is one or more visit records/notes, not an irreversible map paint operation. Deleting one of several visits must not clear the country until the last visible visit is removed.
 
-Owner journey: Profile → Edit travel map → select/search country → mark visited → optionally add cities, dates, note, linked trip → preview audience → save → colour and counts update. Visitor journey: Profile → rotate globe → select coloured country → view accessible notes/trips → save an itinerary. Share cards render only the selected audience's permitted showcase; they must not reuse owner-only totals.
+Owner journey: Profile → Edit travel map → select/search country → tick visited → optionally add cities, dates, note, linked trip → preview audience → save → colour and counts update. Visitor journey: Profile → inspect flat world map → select coloured country → view accessible notes/trips → save an itinerary. Share cards render only the selected audience's permitted showcase; they must not reuse owner-only totals.
 
-Add map/list controls, explicit visited/planned legend, keyboard country selection, text statistics, reduced motion, and a static fallback when WebGL fails. Test dateline polygons, small countries, disputed boundaries, repeated visits, private-to-public changes, deletion, and mobile gesture conflicts. Use restrained fill animations on user confirmation; do not auto-rotate indefinitely or reward disclosure of private locations. Relevant rendering references: [MapLibre GL JS](https://maplibre.org/maplibre-gl-js/docs/), [native capabilities/setup](https://maplibre.org/maplibre-react-native/docs/setup/getting-started/).
+Add map/list controls, explicit visited/planned legend, keyboard country selection, text statistics, reduced motion, and a readable list if map rendering fails. Test dateline polygons, small countries, disputed boundaries, repeated visits, private-to-public changes, deletion, and mobile touch targets. Use restrained fill animations on user confirmation. Detailed trip-map rendering references: [MapLibre GL JS](https://maplibre.org/maplibre-gl-js/docs/), [native capabilities/setup](https://maplibre.org/maplibre-react-native/docs/setup/getting-started/).
 
 ## 9. Media and reconstruction pipeline
 

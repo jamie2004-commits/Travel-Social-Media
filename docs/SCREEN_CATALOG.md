@@ -418,15 +418,15 @@ Jamie · @jamie · Collect places. Keep the stories.
 
 **Layout and content:**
 
-- Rotate your travel globe
-- 6 countries • 11 cities • 8 trips
+- Your visited-country collection
+- 20 countries • 43 sample cities • 12 sample trips
 - Showcase • Trips • Saved • Badges
 - Colour a country when you visit. Add a note or connect a trip.
 - Featured trip · Barcelona with friends
 
 **Actions:** Edit travel map; Full world map; Edit profile; Country status; Badges; Settings.
 
-**States and rules:** New profile starts with an inviting empty globe; owner-only versus public preview counts clearly separated.
+**States and rules:** New profile starts with an inviting empty world map; owner-only versus public preview counts clearly separated.
 
 ## Other traveller profile
 
@@ -437,7 +437,7 @@ Jamie · @jamie · Collect places. Keep the stories.
 **Layout and content:**
 
 - Explore Alex’s visible travels
-- 6 visible countries • 11 cities • 8 trips
+- 20 visible countries • 43 sample cities • 12 sample trips
 - Showcase • Trips • Followers
 - Travel notes and totals reflect what Alex chose to share.
 - Barcelona with friends · View itinerary
@@ -465,24 +465,24 @@ Your travel identity, with clear visibility choices.
 
 **States and rules:** Handle taken, image upload failure, privacy transition preview, and unsaved changes.
 
-## World globe / flat map
+## Flat world map
 
 **Route:** `/me/map` · **Stage:** P1 · **Wireframe ID:** `world`
 
-Rotate the globe, or switch to a map or country list.
+Tick countries on the map or use the searchable country list.
 
 **Layout and content:**
 
 - Visited countries showcase
-- Globe • Flat map • Country list
-- 6 countries • 11 cities
+- World map • Flat map • Country list
+- 20 countries • 43 sample cities
 - Search country or city
 - Visited • Wishlist • All years
 - Legend: teal = visited · outline = wishlist · grey = unvisited
 
 **Actions:** Edit visits; Country details; Back to profile.
 
-**States and rules:** WebGL failure, reduced motion, keyboard/list mode, no visits, small-country picking, and audience preview.
+**States and rules:** Map rendering failure, reduced motion, keyboard/list mode, no visits, small-country picking, and audience preview.
 
 ## Mark countries / annotations
 
@@ -729,7 +729,7 @@ Celebrate memories at your own pace.
 **Layout and content:**
 
 - Your coloured-country collection
-- 6 countries • 11 cities • 3 badges
+- 20 countries • 43 sample cities • 3 badges
 - First memory · earned
 - Five countries · earned
 - Next milestone · ten cities with a saved note

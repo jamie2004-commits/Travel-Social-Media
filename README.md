@@ -4,7 +4,7 @@ Planning edition · 8 September 2026 · Working name, not final branding.
 
 **A website and mobile app for planning trips, keeping photos and memories together, and discovering what to do overseas through people you follow.**
 
-This repository currently contains planning documents and illustrative wireframes only. No application, database, hosting account, or production service has been implemented or deployed.
+This repository contains planning documents, illustrative screen wireframes, and a browser prototype of the profile's interactive flat world map. Prototype selections demonstrate the experience; they are not connected to a real account or database. The full application and production services remain future work.
 
 ## Read the plan
 
@@ -12,6 +12,10 @@ This repository currently contains planning documents and illustrative wireframe
 - [Interactive planning document and screen wireframes](docs/project-blueprint.html): download/open this HTML file in a browser; GitHub's file view does not render the interactive document.
 - [Screen catalogue](docs/SCREEN_CATALOG.md): routes, page responsibilities, interactions, and states.
 - [Change and push log](CHANGELOG.md): one entry for each meaningful pushed change set.
+
+The current design uses a flat, interactive world map. Open the HTML file directly in a browser to try the 20-country example, tick/untick visits, search countries, and save a travel note. Choices remain local to that browser. The sample covers the United States, Europe, Southeast Asia, Japan, South Korea, and China.
+
+To regenerate the self-contained HTML after editing the documents or design sources, run `python docs/build_blueprint.py`. Its layout, styles, and interactions live in `docs/blueprint-template.html`, `docs/blueprint.css`, and `docs/blueprint.js`; the geographic source and licence are in `docs/assets/`. The output needs no server or external JavaScript downloads.
 
 ## 1. Decisions from the founder
 
@@ -24,7 +28,8 @@ This repository currently contains planning documents and illustrative wireframe
 | Current location | A manual country-presence toggle such as “Alex is in Spain now”; no continuous GPS tracking. |
 | Scope | All features in the concept remain in the product roadmap. |
 | Resources | Side project with long-term ambition; team capacity, budget, and launch date are not fixed. |
-| Current task | Document the product, implementation plan, and wireframes; do not build the application yet. |
+| Current task | Document the full product and implementation plan; create screen wireframes and an interactive flat-map profile prototype. Full application implementation remains future work. |
+| Profile showcase | A flat world map with countries users can tick as visited, coloured country fills, and country/city statistics. |
 | Repository workflow | Commit and push completed changes to GitHub and keep a continuous log. |
 
 Recommendations below are proposals, not additional decisions attributed to the founder. Sequencing makes the work manageable; it does not remove features from the agreed vision.
@@ -71,13 +76,15 @@ The same detail page offers Overview, Itinerary, Photos, and Map. Editing a plan
 
 Batch upload, progress, retry, duplicate detection, captions, date/location edits, cover selection, day grouping, and accessible photo descriptions. Store originals privately and deliver appropriate image sizes. Explain metadata use at upload. Preserve original EXIF separately from user corrections; shared derivatives should not expose hidden GPS metadata. Videos are a possible expansion, not an assumed launch requirement.
 
-### World map, 3D globe, and profile showcase
+### Flat world map and profile showcase
 
-Every profile has a prominent travel showcase: a rotatable, zoomable **3D globe**, countries filled with colour when visited, and country/city totals immediately below. The owner can select a country, mark it visited, annotate it with a note or visit period, and link trips/photos. Visitors can rotate the profile globe and open the travel memories they are allowed to see. A flat world map and searchable country list provide alternative controls on small screens and accessible devices.
+Every profile has a prominent travel showcase: an attractive **flat world map**, countries filled with colour when visited, and country/city totals immediately below. The owner can click a country or tick it in a searchable list to mark it visited, annotate it with a note or visit period, and link trips/photos. Visitors can select coloured countries and open the travel memories they are allowed to see. Country controls should remain usable on small screens, including countries too small to select comfortably on the map. The latest flat-map direction replaces the earlier globe proposal.
+
+The prototype starts with an explicitly illustrative **20-country showcase**: United States; United Kingdom, France, Spain, Portugal, Italy, Germany, Netherlands, Switzerland; Singapore, Malaysia, Thailand, Indonesia, Vietnam, Philippines, Cambodia, Laos; Japan, South Korea, and China. These are sample visits, not claims about the founder's travel history. Ticking or unticking a country updates its fill and the distinct-country total immediately; the prototype also derives a clearly labelled sample city total from the selected countries' example city records. The full app must count actual confirmed city visits separately. Country boundaries are embedded for offline viewing, and browser-local persistence remembers the owner's sample selection. Other people's sample profiles remain read-only.
 
 The desired feeling is “this is my travel collection, and I want to fill in more of the map.” Use a consistent visited colour, subdued unvisited countries, a distinct wishlist treatment, optional regional progress, milestone celebrations, and a shareable showcase card. Do not colour an entire country just because it appears in a planned itinerary. Never make colour the only signal: add a legend, labels, and visited indicators.
 
-Country and city counts must come from distinct confirmed visit records, including manual backfill. Public/follower profile maps and statistics must be computed from the same permitted showcase records: a private trip must not leak its country through an aggregate. Owners may explicitly share a country-level visit while keeping its underlying trip private. Explain that choice in the map editor. The globe is a core profile feature, not a later creator-only extra.
+Country and city counts must come from distinct confirmed visit records, including manual backfill. Public/follower profile maps and statistics must be computed from the same permitted showcase records: a private trip must not leak its country through an aggregate. Owners may explicitly share a country-level visit while keeping its underlying trip private. Explain that choice in the map editor. The flat map is a core profile feature, not a later creator-only extra.
 
 Mark countries and cities visited, connect them to trips, filter by year, and open memories from a map selection. Support manual backfill without photos or exact dates. Keep wishlist/planned destinations separate from visited destinations. Country totals count distinct country codes; document how territories and disputed borders are represented. Manual records count as self-reported visits, not verified travel. Avoid a universal “X of 195” promise until the country/territory catalogue is chosen and documented.
 
@@ -165,4 +172,4 @@ Compare retention around travel periods rather than demanding daily usage. Initi
 
 Every completed meaningful change set should include its log entry, be committed, and be pushed to the configured GitHub remote. Tiny local edits and validation fixes can be grouped into that change set. Log the purpose, affected files, verification, destination branch, and a unique push label. GitHub commit history supplies immutable commit hashes; a commit cannot contain its own final hash. Verify remote HEAD after each push and report failure honestly rather than marking an unconfirmed push complete.
 
-Planning documents are the current deliverable. Future infrastructure setup and application implementation start only when requested.
+Planning documents, wireframes, and the interactive flat-map prototype are the current deliverable. Future infrastructure setup and full application implementation start only when requested.
