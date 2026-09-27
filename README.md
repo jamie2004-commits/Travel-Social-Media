@@ -1,5 +1,49 @@
 # Travel Social Media — project overview
 
+## Current version: independent username/password login
+
+**Test on your phone:** double-click `Start Roam Phone.cmd`, connect both devices to the same trusted Wi-Fi, and open the address printed in its window. Sign in with `user123` / `password`. Keep the laptop awake and the server running. If Windows prompts for network access, allow your private network. The current Wi-Fi address is `http://192.168.1.20:8002/login`; it can change when the laptop reconnects. This tests the phone browser interface, not a native installed app. The phone has separate local storage; use backup/restore to transfer laptop data.
+
+The new version runs independently of ChatGPT. Start it with **Start Roam.cmd** and open **http://localhost:8001/login**. Username: **user123**. Password: **password**.
+
+Server authentication, sign-out, protected itinerary files, and existing trip/photo flows have passed HTTP and real-browser checks. An independent hosting package is ready; publishing the replacement live URL is waiting for the Render connection. The previous ChatGPT Sites URL below still serves the old version.
+
+See [DEPLOYMENT.md](DEPLOYMENT.md) for deployment, local-data transfer, and test instructions. This authenticated version needs a connection when signing in or reopening; the previous offline reload behavior is retired to prevent cached app pages bypassing logout. Local photos, notes, spending, and backup/restore are retained.
+
+The sections below document earlier prototype versions, including the old Sites deployment and offline behavior.
+
+## Working app prototype
+
+**Private live app:** [Open Roam](https://roam-hangzhou-shanghai-trip.aioiteam.chatgpt.site/index.html#trip/hangzhou-shanghai-2026). Sign in with the account that owns this site. Version 1 successfully deployed from source commit `60423618b99c5a549bcc97c10b227e449a594124`.
+
+The trip companion now has offline app caching, day filters and Today, editable stops and notes, a trip journal, expense entry with a manually entered exchange rate, and backup/restore including locally saved photo copies.
+
+For this laptop, double-click **Start Roam.cmd**, keep the window open, and visit `http://localhost:8000/index.html#trip/hangzhou-shanghai-2026`. The local server serves only app files, not your original booking document. Use a hosted HTTPS link for a phone away from the laptop. Wait for **Ready offline**, then test an airplane-mode reload on the actual phone before relying on it. External sample photos may require internet; the actual itinerary and saved photos work offline after setup.
+
+Use **Offline & backups → Download backup** after each day. Restore imports personal trips as new copies so existing trips are preserved, adds backed-up visited countries, and restores photo copies. Browser storage is per-device and per-address: moving from the local HTML file or laptop URL to the hosted link requires exporting from the old address and restoring on the new one. There is no automatic cross-device sync. Keep original camera photos separately.
+
+Hosting configuration is in `.openai/hosting.json`. `python scripts/build-site.py` stages only deployable app assets in the isolated `site-source` checkout; original booking documents are excluded. Headless Chromium checks cover offline reload, journal/stop persistence, expense conversion, and backup/restore with photos. Phone hardware and Safari have not been tested.
+
+**Try a friend's trip:** open Friends feed, then select Sophie's Kyoto cover, title, or **View itinerary**. The example has five days, ten stops, a Photos tab, and **Copy itinerary** to make an editable personal version. Friend itineraries are read-only until copied.
+
+**Add your photos:** open My Trips → your trip → **Photos → Upload photos** (also available via the trip's Upload photos shortcut). Choose multiple JPEG, PNG, or WebP files, up to 15 MB each. The prototype saves JPEG copies resized to a maximum 1,600-pixel long edge in this browser's IndexedDB. Add/save captions or remove photos in the gallery. Photos are local only, not uploaded to a service or backed up; clearing browser/site data removes them. HEIC needs exporting to JPEG first. Copied itineraries begin with an empty personal album.
+
+Browser checks: `node scripts/check-browser.cjs` uses an installed Chromium (set `CHROME_PATH` if needed) to test friend navigation, copying, photo upload/caption/reload/removal, invalid files, and desktop/mobile layouts. It creates an isolated temporary browser profile and synthetic test image. Preview screenshots are in `docs/previews/`.
+
+Your **Hangzhou / Shanghai trip (17–24 September 2026)** is now available from the home screen and My Trips. It includes the departure night and seven dated days, all 30 source stops, flights/train, four hotels, and seven recorded expenses totalling **S$1,532.68**. Daily plans preserve original times, Chinese names, notes, and untimed activities. You can complete/remove stops, add a stop to a chosen day with an optional time, and update trip status.
+
+The trip is imported once into existing browser storage without replacing your other trips or later edits. It appears in personal views; Explore continues to show sample inspiration. This is a local prototype, not an authenticated private account. Booking references, PINs, and e-ticket numbers are excluded from the imported data; they remain in your original HTML. No trip has been published. All travel details and spending are taken from your supplied itinerary, not independently verified.
+
+The source is `杭州-上海 (10).html`. Run `python scripts/import-itinerary.py` to regenerate `prototype-trip.js`; regenerating the seed does not overwrite an already imported browser trip. The dated-trip UI lives in `prototype-itinerary.js`. Run `node scripts/check-prototype.cjs` for rendering, copying, import, and persistence checks.
+
+Open [index.html](index.html) in a browser to try **Roam**, the interactive travel social app prototype. No npm installation or build step is needed. Alternatively run `python -m http.server 8000` from this directory and visit `http://localhost:8000`.
+
+Explore the friends feed, search destinations, save and like trips, create a personal trip, copy a friend's itinerary, add/remove itinerary stops, mark stops visited, change trip status, and edit your visited-country map. Changes persist in this browser using local storage. Layouts adapt to desktop and phone widths.
+
+The friends' trips and original Bali trip are samples; Hangzhou / Shanghai uses your supplied itinerary. There is no live account, backend, upload service, or real social interaction. Photos load from Unsplash and fonts from Google Fonts, requiring an internet connection; the map and app logic are local. Country visits are manually recorded separately from itinerary stops. The prototype's working name is not final branding.
+
+Implementation: `index.html`, `prototype.css`, `prototype.js`, and `prototype-map.js`. The map embeds the existing Natural Earth dataset from `docs/assets/world-countries.geojson`; see its attribution file. The detailed planning document below remains available separately.
+
 Planning edition · 8 September 2026 · Working name, not final branding.
 
 **A website and mobile app for planning trips, keeping photos and memories together, and discovering what to do overseas through people you follow.**

@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: roam-trip-prototype
+    runtime: node
+    plan: free
+    buildCommand: node --check server.cjs
+    startCommand: node server.cjs
+    healthCheckPath: /healthz
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: ROAM_USERNAME
+        value: user123
+      - key: ROAM_PASSWORD
+        value: password

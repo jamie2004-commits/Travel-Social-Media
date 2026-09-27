@@ -1,0 +1,13 @@
+site-source/
+site-deploy.tar
+independent-release/
+roam-independent.zip
+
+# Private source documents and device backups are not collaboration source.
+/杭州-上海 (10).html
+roam-backup-*.json
+.env
+.env.*
+!.env.example
+node_modules/
+__pycache__/
