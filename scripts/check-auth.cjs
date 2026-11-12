@@ -17,6 +17,7 @@ const {createApp}=require('../server.cjs');
     const cookie=rawCookie.split(';')[0];const headers={Cookie:cookie};
     assert.equal((await request('/index.html',{headers})).status,200);
     assert.equal((await request('/prototype-trip.js',{headers})).status,200);
+    assert.equal((await request('/prototype-memories.js',{headers})).status,200);
     for(const name of ['/.git/config','/.openai/deployment.json','/server.cjs','/render.yaml','/'+encodeURIComponent('杭州-上海 (10).html')])assert.equal((await request(name,{headers})).status,404);
     assert.equal((await request('/auth/logout',{method:'POST',headers:{...headers,Origin:'https://unrelated.example'}})).status,403);
     assert.equal((await request('/auth/logout',{method:'POST',headers})).status,200);

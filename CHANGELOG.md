@@ -1,5 +1,15 @@
 # Change and push log
 
+## SOCIAL-001 ? Photo posts and chronological trip stories
+
+- Date: 12 November 2026.
+- Replaced the default itinerary presentation with a social-style photo feed and trip stories ordered by local visit date/time. Add/edit/delete posts with a photo, caption, place, and visit time. Recent visits appear first in the home feed.
+- Preserved existing photos, trip data, and planning tools under Trip details. Backup/restore retains new post metadata and accepts older backups. Posts remain browser-local; example friend content is clearly labelled.
+- Updated authenticated asset serving, release packaging, collaborator notes, and browser checks.
+- Validation: authentication, existing prototype regressions, and new story/order/escaping/backup compatibility tests passed; deployment archive validated. Actual Chromium checks are blocked by child-process EPERM in this environment.
+- Destination: origin/main. Push is pending: GitHub connection failed through the environment network proxy; no Render deployment is claimed.
+
+
 ## HANDOFF-001 — Publish working prototype for collaboration
 
 - Date: 28 September 2026.

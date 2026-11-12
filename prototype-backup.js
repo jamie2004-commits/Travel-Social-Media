@@ -6,7 +6,7 @@ async function buildBackup() {
   const ids=new Set(trips.map(t=>t.id));
   const records=(await photoTransaction('readonly',store=>store.getAll())).filter(p=>ids.has(p.tripId));
   const photos=[];
-  for(const p of records)photos.push({tripId:p.tripId,name:p.name,caption:p.caption,created:p.created,data:await fileDataURL(p.blob)});
+  for(const p of records)photos.push({tripId:p.tripId,name:p.name,caption:p.caption,created:p.created,...(p.visitedAt?{visitedAt:p.visitedAt}:{}),...(p.place?{place:p.place}:{}),data:await fileDataURL(p.blob)});
   return {format:'roam-travel-backup',version:1,created:new Date().toISOString(),trips,visited:[...state.visited],photos};
 }
 function validateBackup(data) {
@@ -42,7 +42,8 @@ function validateBackup(data) {
   const visited=arr(data.visited,300).map(v=>{if(!/^[A-Z]{3}$/.test(str(v,3)))fail();return v;});
   const photos=arr(data.photos,1000).map(p=>{
     if(!p||!ids.has(p.tripId)||typeof p.data!=='string'||!/^data:image\/jpeg;base64,[A-Za-z0-9+/=]+$/.test(p.data)||p.data.length>10000000)fail();
-    return {tripId:p.tripId,name:str(p.name,1000),caption:str(p.caption,180),created:number(p.created,0,1e15),data:p.data};
+    if(p.visitedAt!==undefined&&!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(str(p.visitedAt,16)))fail();
+    return {...(p.visitedAt?{visitedAt:p.visitedAt}:{}),...(p.place?{place:str(p.place,200)}:{}),tripId:p.tripId,name:str(p.name,1000),caption:str(p.caption,180),created:number(p.created,0,1e15),data:p.data};
   });
   return {trips,visited,photos};
 }
@@ -62,7 +63,7 @@ async function restoreBackup(data) {
     const binary=atob(p.data.split(',')[1]),bytes=Uint8Array.from(binary,c=>c.charCodeAt(0));
     const blob=new Blob([bytes],{type:'image/jpeg'});
     const bitmap=await createImageBitmap(blob).catch(()=>{throw new Error('A backup photo is damaged. Nothing has been restored.');});bitmap.close();
-    records.push({id:newTripId(),tripId:mapping.get(p.tripId),name:p.name,caption:p.caption,created:p.created,blob});
+    records.push({id:newTripId(),tripId:mapping.get(p.tripId),name:p.name,caption:p.caption,created:p.created,...(p.visitedAt?{visitedAt:p.visitedAt}:{}),...(p.place?{place:p.place}:{}),blob});
   }
   const next=structuredClone(state);
   for(const t of valid.trips)next.trips.push({...t,id:mapping.get(t.id),title:t.title+' — restored'});

@@ -3,7 +3,7 @@ const fs=require('node:fs');
 const path=require('node:path');
 const crypto=require('node:crypto');
 const ROOT=__dirname;
-const ASSETS=new Set(['index.html','prototype.css','prototype-map.js','prototype-trip.js','prototype-itinerary.js','prototype-photos.js','prototype-social.js','prototype-travel.js','prototype-backup.js','prototype.js','manifest.webmanifest','app-icon.svg','auth-client.js']);
+const ASSETS=new Set(['index.html','prototype.css','prototype-map.js','prototype-trip.js','prototype-itinerary.js','prototype-photos.js','prototype-social.js','prototype-travel.js','prototype-backup.js','prototype-memories.js','prototype.js','manifest.webmanifest','app-icon.svg','auth-client.js']);
 const TYPES={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.svg':'image/svg+xml','.webmanifest':'application/manifest+json'};
 const digest=s=>crypto.createHash('sha256').update(s).digest();
 function createApp(options={}) {

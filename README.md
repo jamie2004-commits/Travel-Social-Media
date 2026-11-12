@@ -1,6 +1,14 @@
 # Travel Social Media — project overview
 
-## Current version: independent username/password login
+## Current version: photo stories and a social-style feed
+
+Roam now opens with photo posts instead of itinerary checklists. Use **Add memory** to choose a photo, write a caption, add the place, and set the local date/time when you visited. Each trip story runs earliest to latest; the home feed shows recent visits first. Edit a post to correct its caption, place, visit time, or trip. Older uploads remain visible with an unset visit time until edited.
+
+Existing itinerary, transport, stays, journal, and expenses remain under **Trip details**. Backup/restore includes post captions, places, and visit times. Posts and photos still save in this browser; there is no real social publishing or cross-device sync yet. Friend posts are labelled examples.
+
+Render address: https://travel-social-media.onrender.com/ . Local source edits appear there only after a successful GitHub push and Render deployment.
+
+## Standalone username/password login
 
 **Test on your phone:** double-click `Start Roam Phone.cmd`, connect both devices to the same trusted Wi-Fi, and open the address printed in its window. Sign in with `user123` / `password`. Keep the laptop awake and the server running. If Windows prompts for network access, allow your private network. The current Wi-Fi address is `http://192.168.1.20:8002/login`; it can change when the laptop reconnects. This tests the phone browser interface, not a native installed app. The phone has separate local storage; use backup/restore to transfer laptop data.
 

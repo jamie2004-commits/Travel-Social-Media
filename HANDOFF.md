@@ -8,6 +8,12 @@
 
 On Windows, `Start Roam.cmd` starts laptop testing. `Start Roam Phone.cmd` starts phone testing on port 8002 and prints the laptop's current network address. Connect both devices to the same trusted Wi-Fi. Do not reuse another developer's LAN address from historical notes.
 
+## Photo story update
+
+`prototype-memories.js` supplies the default feed, chronological photo stories, and add/edit/delete composer. Posts extend existing IndexedDB photo records with optional `place` and `visitedAt` (local wall time at the destination). Older photo records and backups remain valid. The former trip detail view is retained under Trip details. New posts are device-local, not shared with followers.
+
+`npm test` includes ordering, story/planning rendering, caption escaping, and metadata backup/restore checks. `scripts/check-browser.cjs` now covers the post composer, editing, reload, ordering, backup/restore, planning access, and mobile layouts. This environment blocks Chromium child-process startup with EPERM; browser checks must be run in an unrestricted local terminal.
+
 ## Current implementation
 
 - `server.cjs`, `login.*`, `auth-client.js`: standalone Node server, prototype login, protected app files, and logout.
