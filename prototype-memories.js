@@ -35,7 +35,7 @@ function sampleMemories(t) {
   return memoryPost({place:t.place,caption:t.story||'Slow mornings, new places, and a few favourite moments.',visitedAt:''},t,photo(photos[t.image]||photos.mountain),true);
 }
 function memoryComposerLink(t) {
-  return `<button class="memory-compose" data-compose-memory="${t?.id||''}"><span class="avatar">JL</span><span>Where have you been?<small>Add a photo, a place, and a little story.</small></span><b>＋</b></button>`;
+  return `<button class="memory-compose" data-compose-memory="${t?.id||''}"><span class="avatar">JL</span><span>Where have you been?<small>Share a photo and a caption. Add a place if you like.</small></span><b>＋</b></button>`;
 }
 renderPage = function() {
   const route=location.hash.slice(1)||'feed';

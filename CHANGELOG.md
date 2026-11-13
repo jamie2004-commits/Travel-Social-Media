@@ -6,7 +6,8 @@
 - New posts need only a photo and a caption. Location is optional. The visit date is now optional under "Use a different date"; when left blank, a post is dated by when it was posted.
 - Posting-time posts show relative times ("Just now", "3h ago", "2d ago", then a date); custom dates show as "18 Sep 2026 · 08:00". Undated and dated posts sort together by their effective time, so new posts no longer sink to the bottom.
 - Editing a post can clear the custom date to fall back to the posting time. Existing posts and backups are unaffected.
-- Validation: full test suite (auth, prototype, memories) passed, including new date/ordering/relative-time checks. Not yet checked in a real browser.
+- Feed composer prompt now reads "Share a photo and a caption. Add a place if you like." so it no longer implies a place is required.
+- Validation: full test suite (auth, prototype, memories) passed, including new date/ordering/relative-time checks. Browser-checked locally: caption-only post shows "Just now"; custom-dated post shows "18 Sep 2026 · 18:30"; trip page orders oldest first and feed newest first.
 - Destination: origin/main.
 
 ## SOCIAL-001 — Photo posts and chronological trip stories
