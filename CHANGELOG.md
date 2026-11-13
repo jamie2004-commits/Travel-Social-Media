@@ -1,13 +1,22 @@
 # Change and push log
 
-## SOCIAL-001 ? Photo posts and chronological trip stories
+## SOCIAL-002 — Instagram-style posting: optional date and location
+
+- Date: 13 November 2026.
+- New posts need only a photo and a caption. Location is optional. The visit date is now optional under "Use a different date"; when left blank, a post is dated by when it was posted.
+- Posting-time posts show relative times ("Just now", "3h ago", "2d ago", then a date); custom dates show as "18 Sep 2026 · 08:00". Undated and dated posts sort together by their effective time, so new posts no longer sink to the bottom.
+- Editing a post can clear the custom date to fall back to the posting time. Existing posts and backups are unaffected.
+- Validation: full test suite (auth, prototype, memories) passed, including new date/ordering/relative-time checks. Not yet checked in a real browser.
+- Destination: origin/main.
+
+## SOCIAL-001 — Photo posts and chronological trip stories
 
 - Date: 12 November 2026.
 - Replaced the default itinerary presentation with a social-style photo feed and trip stories ordered by local visit date/time. Add/edit/delete posts with a photo, caption, place, and visit time. Recent visits appear first in the home feed.
 - Preserved existing photos, trip data, and planning tools under Trip details. Backup/restore retains new post metadata and accepts older backups. Posts remain browser-local; example friend content is clearly labelled.
 - Updated authenticated asset serving, release packaging, collaborator notes, and browser checks.
 - Validation: authentication, existing prototype regressions, and new story/order/escaping/backup compatibility tests passed; deployment archive validated. Actual Chromium checks are blocked by child-process EPERM in this environment.
-- Destination: origin/main. Push is pending: GitHub connection failed through the environment network proxy; no Render deployment is claimed.
+- Destination: origin/main. Pushed (commit 01bfda4 confirmed on origin/main); no Render deployment is claimed.
 
 
 ## HANDOFF-001 — Publish working prototype for collaboration

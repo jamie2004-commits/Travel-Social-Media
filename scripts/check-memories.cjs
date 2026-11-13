@@ -17,8 +17,12 @@ assert(!get('#app').innerHTML.includes('data-stop='));
 run('planningTrip="hangzhou-shanghai-2026";render()');
 assert(get('#app').innerHTML.includes('data-stop='));
 assert(get('#app').innerHTML.includes('Back to photo story'));
-assert.equal(run('orderedMemories([{id:"late",created:1,visitedAt:"2026-09-18T18:00"},{id:"early",created:2,visitedAt:"2026-09-18T08:00"},{id:"old",created:0}]).map(p=>p.id).join()'),'early,late,old');
-assert.equal(run('orderedMemories([{id:"early",created:2,visitedAt:"2026-09-18T08:00"},{id:"old",created:0},{id:"late",created:1,visitedAt:"2026-09-18T18:00"}],true).map(p=>p.id).join()'),'late,early,old');
+// Posts without a chosen date are dated by when they were posted (created).
+assert.equal(run('orderedMemories([{id:"late",created:1,visitedAt:"2026-09-18T18:00"},{id:"early",created:2,visitedAt:"2026-09-18T08:00"},{id:"posted",created:Date.parse("2030-01-01T00:00:00")}]).map(p=>p.id).join()'),'early,late,posted');
+assert.equal(run('orderedMemories([{id:"early",created:2,visitedAt:"2026-09-18T08:00"},{id:"posted",created:Date.parse("2030-01-01T00:00:00")},{id:"late",created:1,visitedAt:"2026-09-18T18:00"}],true).map(p=>p.id).join()'),'posted,late,early');
+assert.equal(run('memoryTime({created:Date.now()})'),'Just now');
+assert.equal(run('memoryTime({created:Date.now()-3*3600000})'),'3h ago');
+assert.equal(run('memoryTime({created:1,visitedAt:"2026-09-18T08:00"})'),'18 Sep 2026 · 08:00');
 assert(run('memoryPost({id:"p",place:"<script>",caption:"<img onerror=x>",visitedAt:"2026-09-18T08:00"},state.trips[0],"blob:test").includes("&lt;img onerror=x&gt;")'));
 (async()=>{
   run(`photoTransaction=async()=>[{id:'p',tripId:'hangzhou-shanghai-2026',name:'test.jpg',caption:'Evening walk',created:1,visitedAt:'2026-09-18T18:00',place:'West Lake',blob:new Blob(['x'])}];fileDataURL=async()=>'data:image/jpeg;base64,eA==';createImageBitmap=async()=>({close(){}});writePhotoBatch=async(records)=>{globalThis.restoredRecords=records};`);
